@@ -9,6 +9,11 @@ from . import models
 class ItemAdmin(admin.ModelAdmin):
     """Item Admin definition"""
 
+    list_display = ("name", "used_by")
+
+    def used_by(self, obj):
+        return obj.rooms.count()
+
     pass
 
 
@@ -16,7 +21,66 @@ class ItemAdmin(admin.ModelAdmin):
 class RoomAdmin(admin.ModelAdmin):
     """Room Admin definition"""
 
-    pass
+    fieldsets = (
+        (
+            "basic Info",
+            {"fields": ("name", "description", "country", "city", "price", "address")},
+        ),
+        ("Times", {"fields": ("check_in", "check_out", "instant_book")}),
+        ("Spaces", {"fields": ("guests", "beds", "bedrooms", "baths")}),
+        (
+            "More About the Space",
+            {
+                "classes": ("collapse",),  # => 필요에 따라 접거나 펴서 보이게끔 해주는 옵션
+                "fields": ("amenities", "facilities", "house_rules"),
+            },
+        ),
+        ("Last Details", {"fields": ("host",)}),
+    )
+
+    list_display = (
+        "name",
+        "country",
+        "city",
+        "price",
+        "guests",
+        "beds",
+        "bedrooms",
+        "baths",
+        "check_in",
+        "check_out",
+        "instant_book",
+        "count_amenities",  # 1 def
+        "count_photos",
+        "total_rating",
+    )
+
+    list_filter = (
+        "instant_book",
+        "host__superhost",
+        "room_type",
+        "amenities",
+        "facilities",
+        "house_rules",
+        "city",
+        "country",
+    )
+
+    ordering = ("name",)
+
+    search_fields = ("=city", "^host__username")
+
+    filter_horizontal = ("amenities", "facilities", "house_rules")
+
+    def count_amenities(
+        self, obj
+    ):  # 1 함수 이름과 list 이름이 같아야함. obj 는 row를 말하며, 여기선 Room 이다.
+        return obj.amenities.count()  # Room에서 __str__ 로 name을 리턴했으므로 Room.name이 출력됨.
+
+    count_amenities.short_description = "amenities"  # 이름 바꿀 수 있음
+
+    def count_photos(self, obj):
+        return obj.photos.count()
 
 
 @admin.register(models.Photo)
