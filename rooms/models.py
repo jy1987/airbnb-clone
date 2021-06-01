@@ -58,11 +58,14 @@ class Photo(core_models.TimeStampedModel):
     """Photo Model definition"""
 
     caption = models.CharField(max_length=80)
-    file = models.ImageField()
+    file = models.ImageField(upload_to="room_photos")
     room = models.ForeignKey("Room", related_name="photos", on_delete=models.CASCADE)
 
     def __str__(self):
         return self.caption
+
+    def name_room(self):
+        return self.room
 
 
 class Room(core_models.TimeStampedModel):
@@ -96,6 +99,11 @@ class Room(core_models.TimeStampedModel):
         self,
     ):  # python 이나 django에서 __str__ 은 class를 발견하면 class를 string처럼 보는 method이다.
         return str(self.name)
+
+    def save(self, *args, **kwargs):
+        self.city = self.city.title()
+        self.name = self.name.title()
+        super().save(*args, **kwargs)
 
     def total_rating(self):
         all_reviews = self.reviews.all()

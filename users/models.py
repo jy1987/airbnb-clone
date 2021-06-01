@@ -27,7 +27,7 @@ class User(AbstractUser):
 
     CURRENCY_CHOICE = ((CURRENCY_USD, "USD"), (CURRENCY_KRW, "KRW"))
 
-    avatar = models.ImageField(blank=True)
+    avatar = models.ImageField(upload_to="avatar", blank=True)
     gender = models.CharField(
         choices=GENDER_CHOICE, max_length=10, blank=True
     )  # 단순 form에만 영향을 미침. not database

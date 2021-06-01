@@ -1,12 +1,22 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from . import models  # 이렇게 from.import 적는건 같은 폴더 안에 models 를 불러온다는 의미
+from rooms import models as room_models
 
 # Register your models here.
+
+
+class RoomInline(admin.TabularInline):
+
+    model = room_models.Room
+
+
 @admin.register(models.User)
 class CustomUserAdmin(UserAdmin):
 
     """Custom User Admin"""
+
+    inlines = (RoomInline,)
 
     fieldsets = (
         (
