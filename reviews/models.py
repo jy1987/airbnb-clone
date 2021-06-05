@@ -15,7 +15,7 @@ class Review(core_models.TimeStampedModel):
     cleanliness = models.IntegerField()
     location = models.IntegerField()
     check_in = models.IntegerField()
-    value = models.IntegerField()
+    value = models.IntegerField()  # IntegerRangeField 사용해야할듯
     user = models.ForeignKey(
         "users.User", related_name="reviews", on_delete=models.CASCADE
     )
