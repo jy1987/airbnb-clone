@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+
+{% block page_name %}
+
+    {{page}} page
+    
+{% endblock page_name %}
+    
+{% block content %}
+
+    {% for room in rooms %}
+    <h3> {{room.name}} / {{room.price}}</h3>
+    {% endfor %}
+    
+
+    {% if page is not 1 %}
+        <a href="?potato={{page|add:-1}}">Previous</a>
+    {% endif %}
+
+    page {{page}} of {{page_count}}
+
+    {% if page is not page_count %}
+        <a href="?potato={{page|add:1}}">Next</a>
+    {% endif %}
+
+
+{% endblock content %}
+    
