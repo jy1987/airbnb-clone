@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+
+{% block page_name %}
+
+    {{page}} page
+    
+{% endblock page_name %}
+    
+{% block content %}
+
+    {{now}}
+
+    {% for room in rooms %} <!-- 원래는 object_list 였다. context_object_name = "rooms" 으로 수정-->
+    <h3> {{room.name}} / {{room.price}}</h3>
+    {% endfor %}
+    
+
+    {% if page_obj.has_previous %}  <!--ListView는 page_obj로 그 page의 object를 가져 올 수 있다.-->
+        <a href="?page={{page_obj.previous_page_number}}">Previous</a><!--원래 potato로 했다가 ListView는 기본적으로 page를 가져와서-->
+    {% endif %}
+
+    page {{page_obj.number}} of {{page_obj.paginator.num_pages}}
+
+    {% if page_obj.has_next %}
+        <a href="?page={{page_obj.next_page_number}}">Next</a>
+    {% endif %}
+
+
+{% endblock content %}
+    

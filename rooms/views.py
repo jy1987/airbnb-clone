@@ -1,22 +1,17 @@
-from math import ceil
-from django.shortcuts import render, redirect
-from django.core.paginator import Paginator, EmptyPage, InvalidPage
+from django.utils import timezone
+from django.views.generic import ListView
 from . import models
 
 
-def all_rooms(request):
-    page = request.GET.get("potato", 1)
-    room_list = models.Room.objects.all()
-    paginator = Paginator(room_list, 10, orphans=5)
+class HomeView(ListView):
 
-    try:
-        rooms = paginator.page((page))
-        print(vars(rooms))
-        print(vars(rooms.paginator))
-        return render(
-            request,
-            "rooms/home.html",
-            {"page": rooms},
-        )
-    except EmptyPage or InvalidPage:
-        return redirect("/")
+    model = models.Room
+    paginate_by = 10
+    ordering = "name"
+    context_object_name = "rooms"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)  # super()가 없으면 모든 데이터가 사라진다.
+        now = timezone.now()
+        context["now"] = now  # template 안에 context 추가하는 방법
+        return context
