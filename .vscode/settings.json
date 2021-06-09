@@ -6,5 +6,6 @@
     "python.formatting.provider": "black",
     "editor.defaultFormatter": "ms-python.python",
     "emmet.includeLanguages": {"django-html": "html"},
-    "python.linting.flake8Args": ["--max-line-length=88"]
+    "python.linting.flake8Args": ["--max-line-length=88"],
+
 }
