@@ -1,5 +1,7 @@
 from django.utils import timezone
 from django.views.generic import ListView
+from django.urls import reverse
+from django.shortcuts import render, redirect
 from . import models
 
 
@@ -10,8 +12,11 @@ class HomeView(ListView):
     ordering = "name"
     context_object_name = "rooms"
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)  # super()가 없으면 모든 데이터가 사라진다.
-        now = timezone.now()
-        context["now"] = now  # template 안에 context 추가하는 방법
-        return context
+
+def room_detail(request, pk):
+    try:
+        room = models.Room.objects.get(pk=pk)
+        print(room)
+        return render(request, "rooms/detail.html", {"room": room})
+    except models.Room.DoesNotExist:
+        return redirect(reverse("core:home"))

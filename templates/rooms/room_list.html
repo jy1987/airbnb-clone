@@ -12,7 +12,10 @@
     {{now}}
 
     {% for room in rooms %} <!-- 원래는 object_list 였다. context_object_name = "rooms" 으로 수정-->
-    <h3> {{room.name}} / {{room.price}}</h3>
+    <h3> 
+       <a href="{% url "rooms:detail" room.pk %}">{{room.name}} / {{room.price}}</a> 
+    </h3>
+
     {% endfor %}
     
 
