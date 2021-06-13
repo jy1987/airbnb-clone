@@ -126,6 +126,8 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+# static directory는 static url에 접근했을 때 path에 있는 폴더로 접근하게 해주는거
 AUTH_USER_MODEL = "users.User"
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "uploads_file")
