@@ -3,7 +3,7 @@ from django.forms.fields import EmailField
 from . import models
 
 
-class LoginForm(forms.Form):
+class LoginForm(forms.Form):  # Form에는 save method가 없다.
 
     email = forms.EmailField()
     password = forms.CharField(widget=forms.PasswordInput)
@@ -21,20 +21,17 @@ class LoginForm(forms.Form):
             self.add_error("email", forms.ValidationError("user does not exist"))
 
 
-class SignUpForm(forms.Form):
-    first_name = forms.CharField(max_length=70)
-    last_name = forms.CharField(max_length=70)
-    email = forms.EmailField()
+# add_error는 특정 필드에 에러를 넣는 함수
+
+
+class SignUpForm(forms.ModelForm):  # ModelForm은 save method가 있다.
+    class Meta:
+        model = models.User
+        fields = ("first_name", "last_name", "email")
+
+    # user가 password는 갖고 있지 않으므로, 아래처럼 password 부분은 만들어놓는다.
     password = forms.CharField(widget=forms.PasswordInput)
     confirm_pw = forms.CharField(widget=forms.PasswordInput, label="Confirm password")
-
-    def clean_email(self):
-        email = self.cleaned_data.get("email")
-        try:
-            models.User.objects.get(email=email)
-            raise forms.ValidationError("already user exist with that mail")
-        except models.User.DoesNotExist:
-            return email
 
     def clean_confirm_pw(self):
         password = self.cleaned_data.get("password")
@@ -44,12 +41,11 @@ class SignUpForm(forms.Form):
         else:
             return password
 
+    # make for username and password
     def save(self):
-        first_name = self.cleaned_data.get("first_name")
-        last_name = self.cleaned_data.get("last_name")
+        user = super().save(commit=False)
         email = self.cleaned_data.get("email")
         password = self.cleaned_data.get("password")
-        user = models.User.objects.create_user(email, email, password)
-        user.first_name = first_name
-        user.last_name = last_name
+        user.username = email
+        user.set_password(password)
         user.save()

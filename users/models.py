@@ -35,7 +35,11 @@ class User(AbstractUser):
         default="", blank=True
     )  # default 를 줘야 database column 을 채움으로써 문제가 안생김.
     birthday = models.DateField(blank=True, null=True)
-    language = models.CharField(choices=LANGUAGE_CHOICE, max_length=2, blank=True)
-    currency = models.CharField(choices=CURRENCY_CHOICE, max_length=3, blank=True)
+    language = models.CharField(
+        choices=LANGUAGE_CHOICE, max_length=2, blank=True, default=LANGUAGE_KOREAN
+    )
+    currency = models.CharField(
+        choices=CURRENCY_CHOICE, max_length=3, blank=True, default=CURRENCY_KRW
+    )
     # hobby = models.TextField(default="")
     superhost = models.BooleanField(default=False)  # superhost 인지 아닌지
