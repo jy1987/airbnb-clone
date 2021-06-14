@@ -1,7 +1,16 @@
 @tailwind base;
 @tailwind components;
-@tailwind utilities;
 
-body {
-    background-color:red;
+
+.search-box {
+    transition: box-shadow 1s linear;
 }
+
+.nav_link{
+    @apply ml-8 border-b-2 border-white hover:border-gray-400 h-full flex items-center;
+    a {
+        @apply py-10 px-5;
+    }
+}
+
+@tailwind utilities;

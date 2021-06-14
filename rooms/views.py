@@ -9,7 +9,7 @@ from . import models, forms
 class HomeView(ListView):
 
     model = models.Room
-    paginate_by = 10
+    paginate_by = 12
     ordering = "name"
     context_object_name = "rooms"
 

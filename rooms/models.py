@@ -123,4 +123,10 @@ class Room(core_models.TimeStampedModel):
 
             return round(all_rating / len(all_reviews), 2)
         else:
-            return "not review"
+            return 0
+
+    def first_photo(self):
+        # photo = self.photos.all()[:1]  # 요렇게 하면 쿼리셋이라 value들을 가져오진 못함
+        (photo,) = self.photos.all()[:1]
+        print(photo.file.url)
+        return photo.file.url

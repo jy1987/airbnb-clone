@@ -1,10 +1,10 @@
 
-    <a href="{% url "core:home" %}"> Nbnb </a>
-    <ul>
+    
+    <ul class="flex text-sm font-medium h-full">
         {% if user.is_authenticated %}
-             <li><a href="{% url "users:logout" %}">Logout</a></li>
+             <li class="nav_link"><a class="py-10 px-5" href="{% url "users:logout" %}">Logout</a></li>
         {% else %}
-            <li><a href="{% url "users:login" %}">Login</a></li>
-            <li><a href="{% url "users:signup" %}">Signup</a></li>
+            <li class="nav_link"><a class="py-10 px-5" href="{% url "users:login" %}">Login</a></li>
+            <li class="nav_link""><a class="py-10 px-5" href="{% url "users:signup" %}">Signup</a></li>
         {% endif %}
     </ul>

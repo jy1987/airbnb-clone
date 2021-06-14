@@ -9,25 +9,29 @@
     
 {% block content %}
 
-    {{now}}
+<div class="container mx-auto">
+    <div class="rounded-3xl bg-gray-800 -mx-8 h-50vh my-10 bg-cover bg-center" style="background-image:url(https://images.unsplash.com/photo-1583422409516-2895a77efded?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1050&q=80)">
+    </div>
 
+    <div class="flex flex-wrap -mx-8">
     {% for room in rooms %} <!-- 원래는 object_list 였다. context_object_name = "rooms" 으로 수정-->
-    <h3> 
-       <a href="{% url "rooms:detail" room.pk %}">{{room.name}} / {{room.price}}</a> 
-    </h3>
+        {% include 'partials/room_card.html' with room=room %}
 
     {% endfor %}
-    
+    </div>
+<div class="flex justify-center items-center" >
+{% if page_obj.has_previous %}  <!--ListView는 page_obj로 그 page의 object를 가져 올 수 있다.-->
+    <a href="?page={{page_obj.previous_page_number}}" class=""><i class="fas fa-arrow-left fa-lg text-pink-500"></i></a><!--원래 potato로 했다가 ListView는 기본적으로 page를 가져와서-->
+{% endif %}
 
-    {% if page_obj.has_previous %}  <!--ListView는 page_obj로 그 page의 object를 가져 올 수 있다.-->
-        <a href="?page={{page_obj.previous_page_number}}">Previous</a><!--원래 potato로 했다가 ListView는 기본적으로 page를 가져와서-->
-    {% endif %}
+<span class="mx-2 text-lg font-medium">page {{page_obj.number}} of {{page_obj.paginator.num_pages}}</span>
 
-    page {{page_obj.number}} of {{page_obj.paginator.num_pages}}
-
-    {% if page_obj.has_next %}
-        <a href="?page={{page_obj.next_page_number}}">Next</a>
-    {% endif %}
+{% if page_obj.has_next %}
+    <a href="?page={{page_obj.next_page_number}}" class=""><i class="fas fa-arrow-right fa-lg text-pink-500"></i></a>
+{% endif %}
+</div>
+</div>
+   
 
 
 {% endblock content %}

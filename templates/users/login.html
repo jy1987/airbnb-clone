@@ -14,14 +14,21 @@
     
     
 {% block content %}
+<div class="container lg:w-3/5 mx-auto flex flex-col items-center py-10 border border-gray-400">
+    {% include 'partials/social_login.html' %}
+    <form  class="w-full flex flex-col items-center" method="post" action="{% url "users:login" %}">
+        {% csrf_token %}
+    
+        <input type="email" placeholder="Email" class="w-3/5 bg-white-400 mt-2 px-8 py-2 border border-gray-400 text-white hover:border-red-400"/>
+        <input type="password" placeholder="Password" class="w-3/5 bg-white-400 mt-2 px-8 py-2 border border-gray-400 text-white hover:border-red-400"/>
+    <button class="w-3/5 bg-blue-400 mt-2 px-8 py-2 border border-gray-400 text-white">Login</button>
+    </form>
+    <div class="mt-4 ">
+        <span class="mr-2">Don't u have any account?</span>
+        <a href="{% url "users:signup" %}" class="text-green-500">Sign up</a>
+    </div>
+</div>
 
-<form method="post" action="{% url "users:login" %}">
-    {% csrf_token %}
-
-    {{form.as_p}}
-
-<button>Login</button>
-</form>
 
 
 
