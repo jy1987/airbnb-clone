@@ -15,13 +15,37 @@
     
 {% block content %}
 
-<form method="post" action="{% url "users:signup" %}">
-    {% csrf_token %}
+<div class="container lg:w-3/5 mx-auto flex flex-col items-center py-10 border border-gray-400">
+    {% include 'partials/social_login.html' %}
+    <form  class="w-full flex flex-col items-center" method="post" action="{% url "users:signup" %}">
+        {% csrf_token %}
 
-    {{form.as_p}}
+        {% if form.non_field_errors %}
+        {% for error in form.non_field_errors %}
+            <span class="text-red-700 font-medium text-sm">{{error}}</span> 
+        {% endfor %}
+        {% endif %}
+      
+        {% for field in form %}
+        <div class="input {% if field.errors %}has_error{% endif %}">
+            {{field}}
+            {% if field.errors %}
+                {% for error in field.errors %}
+                    <span class="text-red-700 font-medium text-sm">{{error}}</span> 
+                {% endfor %}
+            {% endif %}
+        </div>
+        {% endfor %}
 
-<button>Signup</button>
-</form>
+    <button class="w-3/5 bg-blue-400 mt-2 px-8 py-2 border border-gray-400 text-white">Signup</button>
+    </form>
+
+    <div class="mt-4 ">
+        <span class="mr-2">Have an account?</span>
+        <a href="{% url "users:login" %}" class="text-green-500">Login</a>
+    </div>
+
+</div>
 
 
 

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+
+{% block page_title %}
+
+    Room Edit
+    
+{% endblock page_title %}
+
+
+{% block search-bar %}
+    
+{% endblock search-bar %}
+    
+    
+{% block content %}
+
+<form method="post" action="{% url "rooms:edit" room.pk %}">
+    {% csrf_token %}
+
+    {{form.as_p}}
+
+<button>Update</button>
+</form>
+
+
+
+
+{% endblock content %}
