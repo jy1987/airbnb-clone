@@ -13,10 +13,14 @@
     }
 }
 
-.input {
+.btn {
+  @apply text-center rounded-sm py-3 font-light text-lg w-3/5;
+}
+
+input {
     @apply rounded-sm mt-2 px-8 py-2 font-light text-lg w-3/5 text-left border border-gray-600;
     &:focus {
-      @apply outline-none border-gray-500;
+      @apply outline-none border-red-400;
     }
   }
 

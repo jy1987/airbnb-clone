@@ -19,7 +19,7 @@
 
     {% endfor %}
     </div>
-<div class="flex justify-center items-center" >
+<div class="flex mx-auto justify-center items-center container" >
 {% if page_obj.has_previous %}  <!--ListView는 page_obj로 그 page의 object를 가져 올 수 있다.-->
     <a href="?page={{page_obj.previous_page_number}}" class=""><i class="fas fa-arrow-left fa-lg text-pink-500"></i></a><!--원래 potato로 했다가 ListView는 기본적으로 page를 가져와서-->
 {% endif %}

@@ -1,4 +1,5 @@
 from django.contrib.auth.models import AbstractUser
+from django.urls import reverse
 from django.db import models
 from django.db.models.fields import BLANK_CHOICE_DASH
 
@@ -43,3 +44,7 @@ class User(AbstractUser):
     )
     # hobby = models.TextField(default="")
     superhost = models.BooleanField(default=False)  # superhost 인지 아닌지
+
+    def get_absolute_url(self):
+
+        return reverse("users:profile", kwargs={"pk": self.pk})

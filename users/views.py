@@ -1,8 +1,10 @@
+from django.views.generic.edit import UpdateView
+from users import models
 from django.shortcuts import render, redirect, reverse
 from django.contrib.auth import authenticate, login, logout
 from django.views import View
 from django.urls import reverse_lazy
-from django.views.generic import FormView
+from django.views.generic import FormView, DetailView
 from . import forms
 
 # Create your views here.
@@ -44,3 +46,12 @@ class SignUpView(FormView):
 
     # form_valid 를 쓰기 전에 일련의 과정들이 override 되어서
     # super().form_valid 해주는거
+
+
+class UserProfileView(DetailView):
+    model = models.User
+    context_object_name = "user_obj"
+
+
+class UserUpdateView(UpdateView):
+    model = models.User
