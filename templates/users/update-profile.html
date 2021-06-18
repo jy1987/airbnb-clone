@@ -3,7 +3,7 @@
 
 {% block page_title %}
 
-    Login
+    {{user.first_name}}'s Update Profile
     
 {% endblock page_title %}
 
@@ -16,16 +16,23 @@
 {% block content %}
 <div class="container lg:w-3/5 mx-auto flex flex-col items-center py-10 border border-gray-400">
    
-    <form  class="w-full flex flex-col items-center" method="post" action="{% url "users:update" %}">
-        {% csrf_token %}
-    
-        {{form.as_p}}
+    <form  class="w-3/5 flex flex-col items-center border-gray-400" enctype="multipart/form-data" method="post" action="{% url "users:update" %}">
+        {% for field in form %}
+        <div class="input {% if field.errors %}has_error{% endif %}">
+            {{field}}
+            {% if field.errors %}
+                {% for error in field.errors %}
+                    <span class="text-red-700 font-medium text-sm">{{error}}</span> 
+                {% endfor %}
+            {% endif %}
+        </div>
+        {% endfor %}
         
     <button class="w-3/5 bg-blue-500 mt-2 px-8 py-2 border border-gray-400 text-white">Update!!</button>
     </form>
     <div class="mt-4 ">
-        <span class="mr-2">Don't u have any account?</span>
-        <a href="{% url "users:signup" %}" class="text-green-500">Sign up</a>
+        <span class="mr-2">Do u want to change password?</span>
+        <a href="{% url "users:password" %}" class="text-green-500">Update PW</a>
     </div>
 </div>
 
