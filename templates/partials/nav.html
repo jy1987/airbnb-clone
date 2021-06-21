@@ -1,11 +1,10 @@
 
-    
     <ul class="flex text-sm font-medium h-full">
         {% if user.is_authenticated %}
-             <li class="nav_link"><a class="py-10 px-5" href="{% url "users:logout" %}">Logout</a></li>
-             <li class="nav_link"><a class="py-10 px-5" href="{% url "users:profile" user.pk%}">Profile</a></li>
+             <li class="nav_link"><a href="{% url "users:logout" %}">Logout</a></li>
+             <li class="nav_link"><a href="{% url "users:profile" user.pk%}">Profile</a></li>
         {% else %}
-            <li class="nav_link"><a class="py-10 px-5" href="{% url "users:login" %}">Login</a></li>
-            <li class="nav_link"><a class="py-10 px-5" href="{% url "users:signup" %}">Signup</a></li>
+            <li class="nav_link"><a href="{% url "users:login" %}">Login</a></li>
+            <li class="nav_link"><a href="{% url "users:signup" %}">Signup</a></li>
         {% endif %}
     </ul>

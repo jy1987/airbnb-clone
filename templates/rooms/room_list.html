@@ -15,7 +15,7 @@
 
     <div class="flex flex-wrap -mx-8">
     {% for room in rooms %} <!-- 원래는 object_list 였다. context_object_name = "rooms" 으로 수정-->
-        {% include 'partials/room_card.html' with room=room %}
+        {% include 'mixins/room_card.html' with room=room %}
 
     {% endfor %}
     </div>

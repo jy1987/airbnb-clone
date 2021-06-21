@@ -129,4 +129,5 @@ class Room(core_models.TimeStampedModel):
         # photo = self.photos.all()[:1]  # 요렇게 하면 쿼리셋이라 value들을 가져오진 못함
         (photo,) = self.photos.all()[:1]
         print(photo.file.url)
+        print(dir(photo.file))
         return photo.file.url
