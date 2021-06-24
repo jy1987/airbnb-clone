@@ -40,7 +40,7 @@
          <h3>{{user_obj.first_name}}'s Room</h3>
          <div class="flex flex-wrap mt-5">
              {% for room in user_obj.rooms.all %} 
-                 {% include 'partials/room_card.html' with room=room %}
+                 {% include 'mixins/room_card.html' with room=room %}
          
              {% endfor %}
              </div>
