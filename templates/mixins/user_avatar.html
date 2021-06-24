@@ -1,8 +1,10 @@
 {% if user_obj.avatar %}
-<div class="h-32 w-32 rounded-full bg-cover mb-3" style="background-image:  url({{user_obj.avatar.url}});"></div>
+<div class="{{h_and_w|default:'h-24 w-24'}} rounded-full bg-yellow-400 text-white flex items-center justify-center mb-3">
+    <span class="font-bold text-3xl ">{{user_obj.first_name|first}}</span>
+</div>
 
 {% else %}
-<div class="h-32 w-32 rounded-full bg-gray-400 text-white flex items-center justify-center mb-3">
+<div class="{{h_and_w|default:'h-24 w-24'}} rounded-full bg-yellow-400 text-white flex items-center justify-center mb-3">
     <span class="font-bold text-3xl ">{{user_obj.first_name|first}}</span>
 </div>
 {% endif%}
