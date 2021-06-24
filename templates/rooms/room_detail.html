@@ -77,14 +77,14 @@
             {% for review in room.reviews.all %}
                 <div class="w-1/3 flex items-center mt-8">
                     <div>
-                        {% include 'mixins/user_avatar.html' with user_obj=review.user h_and_w='h-16 w-16' %}
+                        {% include 'mixins/user_avatar.html' with user_obj=review.user h_and_w='h-16 w-16' text_size='text-xl'%}
                     </div>
                     <div class="ml-4">
                         <div class="font-medium text-lg">
                             {{review.user}}
                         </div>
                         <div class="font-light text-sm text-gray-400">
-                            {{review.created}}
+                            {{review.created|date:'F Y'}}
                         </div>
                     </div>
                    
