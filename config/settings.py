@@ -133,3 +133,5 @@ AUTH_USER_MODEL = "users.User"
 MEDIA_ROOT = os.path.join(BASE_DIR, "uploads_file")
 
 MEDIA_URL = "/media/"  # /을 앞에 붙이면 절대path가 됨.
+
+LOGIN_URL = "/users/login/"

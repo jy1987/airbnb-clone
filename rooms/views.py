@@ -1,7 +1,13 @@
-from django.views.generic import ListView, DetailView, View, UpdateView
+from django.contrib import messages
+from django.http.response import Http404
+from django.views.generic import ListView, DetailView, View, UpdateView, CreateView
 from django.core.paginator import Paginator
+from django.contrib.auth.decorators import login_required
+from django.views.generic.base import RedirectView
+from django.views.generic.edit import CreateView, FormView
 from django_countries import countries
 from django.urls import reverse
+from users import mixins as user_mixins
 from django.shortcuts import render, redirect
 from . import models, forms
 
@@ -107,7 +113,7 @@ class SearchView(View):
         return render(request, "rooms/search.html", {"form": form})
 
 
-class EditRoomView(UpdateView):
+class EditRoomView(user_mixins.LoggedInOnlyView, UpdateView):
 
     model = models.Room
     fields = (
@@ -129,3 +135,66 @@ class EditRoomView(UpdateView):
         "facilities",
         "house_rules",
     )
+
+    def get_object(self, queryset=None):
+        room = super().get_object(queryset=queryset)
+        print(room.host.pk, self.request.user.pk)
+        if room.host.pk != self.request.user.pk:
+            raise Http404()
+        return room
+
+
+class RoomPhotosView(user_mixins.LoggedInOnlyView, DetailView):
+
+    model = models.Room
+    template_name = "rooms/room_photo.html"
+
+    def get_object(self, queryset=None):
+        room = super().get_object(queryset=queryset)
+        print(room.host.pk, self.request.user.pk)
+        if room.host.pk != self.request.user.pk:
+            raise Http404()
+        return room
+
+
+@login_required
+def delete_photo(request, room_pk, photo_pk):
+    user = request.user
+    try:
+        room = models.Room.objects.get(pk=room_pk)
+        if room.host.pk != user.pk:
+            messages.error(request, "Can't edit photo")
+        else:
+            photo = models.Photo.objects.get(pk=photo_pk)
+            # photo = request.GET.get(models.Room, photo_pk) : pk를 불러온다.
+            # request 로 요청하기 때문에
+            photo.delete()
+            messages.success(request, "deleted that photo")
+        return redirect(reverse("rooms:edit-photo", kwargs={"pk": room_pk}))
+    except models.Room.DoesNotExist:
+        return redirect(reverse("core:home"))
+
+
+class EditPhotoView(user_mixins.LoggedInOnlyView, UpdateView):
+
+    model = models.Photo
+    pk_url_kwarg = "photo_pk"
+    fields = (
+        "caption",
+        "file",
+    )
+
+    def get_success_url(self):
+        room_pk = self.kwargs.get("room_pk")
+        return reverse("rooms:edit-photo", kwargs={"pk": room_pk})
+
+
+class AddPhotoView(user_mixins.LoggedInOnlyView, FormView):
+
+    template_name = "rooms/add_photo.html"
+    form_class = forms.CreatePhotoForm
+
+    def form_valid(self, form):
+        pk = self.kwargs.get("pk")  # view는 pk를 알고 있다.
+        form.save(pk)
+        return redirect(reverse("rooms:edit-photo", kwargs={"pk": pk}))

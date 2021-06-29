@@ -27,3 +27,16 @@ class SearchForm(forms.Form):
         queryset=models.Facility.objects.all(),
         widget=forms.CheckboxSelectMultiple,
     )
+
+
+class CreatePhotoForm(forms.ModelForm):
+    class Meta:
+        model = models.Photo
+        fields = ("caption", "file")
+
+    def save(self, pk):
+
+        photo = super().save(commit=False)
+        photo.room = models.Room.objects.get(pk=pk)
+        photo.save()
+        print(pk)

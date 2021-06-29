@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+
+{% block page_title %}
+
+    {{photo}}'s Add
+    
+{% endblock page_title %}
+
+
+{% block search-bar %}
+    
+{% endblock search-bar %}
+    
+    
+{% block content %}
+<div class="container lg:w-3/5 mx-auto flex flex-col items-center py-10 border border-gray-400">
+   
+   
+        
+       
+            {% include 'mixins/form_author.html' with form=form cta="Add Photo"%}
+
+
+</div>
+
+{% endblock content %}
