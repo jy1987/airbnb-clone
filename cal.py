@@ -3,11 +3,11 @@ import calendar
 
 class Calendar(calendar.Calendar):
     def __init__(self, year, month):
-        super().__init__(firstweekday=1)
+        super().__init__(firstweekday=6)
 
         self.year = year
         self.month = month
-        self.day_names = ("Sun", "Tue", "Wed", "Thu", "Fri", "Sat", "Mon")
+        self.day_names = ("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")
         self.months = (
             "January",
             "February",
@@ -29,8 +29,9 @@ class Calendar(calendar.Calendar):
         # monthdays2calendar(self.year, self.month) => [[(),(),()....],[(),(),()....],[(),(),()....]] 이런식
         days = []
         for week in weeks:
-            for day, _ in week:
+            for day in week:
                 days.append(day)
+        print(days)
         return days
 
     def get_month(self):
