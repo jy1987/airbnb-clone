@@ -198,3 +198,35 @@ class AddPhotoView(user_mixins.LoggedInOnlyView, FormView):
         pk = self.kwargs.get("pk")  # view는 pk를 알고 있다.
         form.save(pk)
         return redirect(reverse("rooms:edit-photo", kwargs={"pk": pk}))
+
+
+class CreateRoomView(user_mixins.LoggedInOnlyView, CreateView):
+    model = models.Room
+    template_name = "rooms/room_create.html"
+    fields = (
+        "name",
+        "photos",
+        "description",
+        "country",
+        "city",
+        "price",
+        "address",
+        "guests",
+        "beds",
+        "bedrooms",
+        "baths",
+        "check_in",
+        "check_out",
+        "instant_book",
+        "host",
+        "room_type",
+        "amenities",
+        "facilities",
+        "house_rules",
+    )
+
+    def form_valid(self, form):
+        room = form.save()  # room은 form이 save된 형태
+        room.host = self.request.user
+        room.save()
+        return redirect(reverse("rooms:detail", kwargs={"pk": room.pk}))

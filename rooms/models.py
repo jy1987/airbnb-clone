@@ -1,7 +1,9 @@
+import calendar
 from django.db import models
 from django.urls import reverse
 from django_countries.fields import CountryField
 from core import models as core_models
+from cal import Calendar
 
 ## from users import models as user_models
 
@@ -127,11 +129,19 @@ class Room(core_models.TimeStampedModel):
 
     def first_photo(self):
         # photo = self.photos.all()[:1]  # 요렇게 하면 쿼리셋이라 value들을 가져오진 못함
-        (photo,) = self.photos.all()[:1]
-        print(photo.file.url)
-        print(dir(photo.file))
-        return photo.file.url
+        try:
+            (photo,) = self.photos.all()[:1]
+            print(photo.file.url)
+            print(dir(photo.file))
+            return photo.file.url
+        except ValueError:
+            return None
 
     def get_photos(self):
         photos = self.photos.all()[1:5]
         return photos
+
+    def get_calendar(self):
+        this_calendar = Calendar(2021, 6)
+        next_calendar = Calendar(2021, 7)
+        return [this_calendar, next_calendar]

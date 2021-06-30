@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+
+{% block page_title %}
+
+    Create Room
+    
+{% endblock page_title %}
+
+
+{% block search-bar %}
+    
+{% endblock search-bar %}
+    
+    
+{% block content %}
+
+<div class="container mx-auto flex flex-col items-center">
+    <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    {{form.as_p}}
+
+<div class="flex justify-center my-5"><button class="bg-red-400 text-white py-2 px-12 rounded-xl">Create Room</button></div>
+</form>
+
+{% endblock content %}

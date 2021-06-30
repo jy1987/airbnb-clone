@@ -2,6 +2,7 @@ from django.views.generic.edit import UpdateView
 from users import models
 from django.shortcuts import render, redirect, reverse
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import PasswordChangeView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
@@ -99,3 +100,12 @@ class UpdatePasswordView(
     template_name = "users/update-password.html"
     success_message = "PassWord Update!"
     success_url = reverse_lazy("users:update")
+
+
+@login_required
+def switch_hosting(request):
+    try:
+        del request.session["is_hosting"]
+    except KeyError:
+        request.session["is_hosting"] = True
+    return redirect(reverse_lazy("core:home"))
