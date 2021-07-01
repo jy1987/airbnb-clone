@@ -8,5 +8,6 @@ urlpatterns = [
         "create/<int:room>/<int:year>-<int:month>-<int:day>",
         views.create,
         name="create",
-    )
+    ),
+    path("<int:pk>/", views.CreateReservationView.as_view(), name="detail"),
 ]

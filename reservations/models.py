@@ -3,6 +3,7 @@ from django.db import models
 from django.db.models.deletion import CASCADE
 from django.utils import timezone
 from core import models as core_models
+from . import managers
 
 # Create your models here.
 
@@ -45,6 +46,7 @@ class Reservation(core_models.TimeStampedModel):
     room = models.ForeignKey(
         "rooms.Room", related_name="reservations", on_delete=CASCADE
     )
+    objects = managers.CustomReservationManager()
 
     def __str__(self):
         return f"{self.room}"
