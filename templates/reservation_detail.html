@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+
+{% block page_title %}
+
+{{reservation}}&{{reservation.check_in}} 
+    
+{% endblock page_title %}
+
+
+{% block search-bar %}
+    
+{% endblock search-bar %}
+    
+    
+{% block content %}
+    <div class="container mx-auto">
+        <div class="w-1/2">
+            
+            <div class="mb-2">
+                <span class="text-2xl font-medium">Contact Your Host</span>
+            </div>
+            <div class="border border-gray-200">
+                <div class="h-56 w-full bg-center bg-cover" style="background-image: url({{reservation.room.first_photo}});">
+
+                </div>
+                <div class="ml-4 py-4">
+                    <div>
+                        <span class="font-normal ">{{reservation.check_in}} - {{reservation.check_out}}</span>
+                        <span class="font-normal ml-2">{{reservation.room.guests}} Guests</span>
+                        <span class="font-normal ml-2 text-green-500">{{reservation.status|capfirst}}</span>
+                    </div>
+                    <div class="mt-2">
+                        <span class="text-xl font-semibold">
+                            {{reservation}}
+                        </span>
+                    </div>
+                    
+                </div>
+                <div class="border-t w-full py-4 flex">
+                    <div class="w-1/6 ml-4">
+                        <div class="{{h_and_w|default:'h-16 w-16'}} rounded-full bg-yellow-400 text-white flex items-center justify-center mb-3">
+                            <span class="font-bold {{text_size|default:'text-3xl'}} ">{{reservation.room.host.first_name|first}}</span>
+                        </div>
+                        <div>
+                            <span class="text-gray-500 text-sm text-center">{{reservation.room.host}}</span>
+                        </div>
+                    </div>
+                    <div class="ml-4 flex flex-col justify-between">
+                        <div class="flex flex-col items-start">
+                            <span class="font-medium">Contact Your Airbnb Host</span>
+                            <span class="text-sm font-light text-gray-500">Your host is the best person to contact for questions about your reservation</span>
+                        </div>
+                        <div>
+                            <a class="py-2 px-8 rounded-sm bg-red-500 text-white text-sm" href="#">Send a Message</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="w-1/2">
+            
+        </div>
+    </div>
+
+
+
+{% endblock content %}
