@@ -107,22 +107,24 @@
                 <div class="mb-20">
                     <div class="mb-2 flex justify-center font-medium text-lg">{{calendar.get_month}} / {{calendar.year}}</div>
                     <div>
-                        <div class="grid grid-cols-7 gap-2 text-center text-indigo-500">
+                        <div class="grid grid-cols-7 gap-2 text-center text-indigo-500 mb-2 font-medium">
                             {% for day in calendar.day_names %}
                             <span>{{day}}</span>
                         {% endfor %}
                         </div>
                        
                         <div class="grid grid-cols-7 gap-2 text-center">
-                            {% for num, mod in calendar.get_days %}
+                            {% for num in calendar.get_days %}
                            
-                                {% if num is not 0 %}
+                                {% if num.number is not 0 %}
                                     
-                                    {% if mod == 6 %}
-                                        <span class="text-red-400">{{num}}</span>
+                                    {% if num.past %}
+                                        <span class="text-gray-200">{{num}}</span>
                                     {% else %}
-                                        <span>{{num}}</span>
+                                        <span class="text-gray-700 bg-gray-100 rounded-md hover:bg-yellow-300  hover:text-white">{{num}}</span>
                                     {% endif %}
+                                        
+                                    
                                 {% else %}
                                     <span></span>
                               

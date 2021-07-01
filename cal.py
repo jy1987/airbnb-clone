@@ -1,4 +1,15 @@
+from django.utils import timezone
 import calendar
+
+
+class Day:
+    def __init__(self, number, number2, past):
+        self.number = number
+        self.number2 = number2
+        self.past = past
+
+    def __str__(self):
+        return str(self.number)
 
 
 class Calendar(calendar.Calendar):
@@ -28,9 +39,18 @@ class Calendar(calendar.Calendar):
         weeks = self.monthdays2calendar(self.year, self.month)
         # monthdays2calendar(self.year, self.month) => [[(),(),()....],[(),(),()....],[(),(),()....]] 이런식
         days = []
+
         for week in weeks:
             for day in week:
-                days.append(day)
+                print(day[0], day[1])
+                now = timezone.now()
+                today = now.day
+                now_month = now.month
+                past = False
+                if now_month >= self.month and day[0] <= today:
+                    past = True
+                new_day = Day(day[0], day[1], past)
+                days.append(new_day)
         print(days)
         return days
 

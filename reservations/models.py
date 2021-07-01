@@ -1,9 +1,20 @@
+import datetime
 from django.db import models
 from django.db.models.deletion import CASCADE
 from django.utils import timezone
 from core import models as core_models
 
 # Create your models here.
+
+
+class BetweenDay(core_models.TimeStampedModel):
+
+    day = models.DateField()
+    reservation = models.ForeignKey("Reservation", on_delete=CASCADE)
+
+    class Meta:
+        verbose_name = "Booked Day"
+        verbose_name_plural = "Between Days"
 
 
 class Reservation(core_models.TimeStampedModel):
@@ -46,3 +57,22 @@ class Reservation(core_models.TimeStampedModel):
         return now > self.check_out
 
     finished.boolean = True
+
+    def save(self, *args, **kwargs):
+        if self.pk is None:
+            start = self.check_in
+            end = self.check_out
+            difference = end - start
+            print(difference)
+            existing_booked_day = BetweenDay.objects.filter(
+                day__range=(start, end)
+            ).exists()
+            print(existing_booked_day)
+            if existing_booked_day is False:
+                super().save(*args, **kwargs)
+                for i in range(difference.days + 1):
+                    day = start + datetime.timedelta(days=i)
+                    print(day)
+                    BetweenDay.objects.create(day=day, reservation=self)
+                return
+        return super().save(*args, **kwargs)

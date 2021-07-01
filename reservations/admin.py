@@ -15,3 +15,11 @@ class ReservationAdmin(admin.ModelAdmin):
         "in_progress",
         "finished",
     )
+
+
+@admin.register(models.BetweenDay)
+class BetweenDayAdmin(admin.ModelAdmin):
+    list_display = (
+        "day",
+        "reservation",
+    )
