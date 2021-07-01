@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load is_booked %}
 
 
 {% block page_title %}
@@ -115,7 +116,8 @@
                        
                         <div class="grid grid-cols-7 gap-2 text-center">
                             {% for num in calendar.get_days %}
-                           
+                                {% is_booked room  num as is_booked_var %}
+                           <!-- as is_booked_bool 이란 변수로 저장시킴, 그 결과 프론트 단에서 보이던 이상한 값들은 출력안됨 일단은-->
                                 {% if num.number is not 0 %}
                                     
                                     {% if num.past %}
