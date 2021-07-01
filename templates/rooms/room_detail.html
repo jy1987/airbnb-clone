@@ -126,7 +126,7 @@
                                     {% elif is_booked_var %}
                                         <span class="text-gray-700 bg-gray-100 rounded-md line-through">{{num}}</span>
                                     {% else %}
-                                        <span class="text-gray-700 bg-gray-100 rounded-md hover:bg-yellow-300  hover:text-white">{{num}}</span>
+                                        <a href="{% url "reservations:create" room.pk num.year num.month num.number %}" class="text-gray-700 bg-gray-100 rounded-md hover:bg-yellow-300  hover:text-white">{{num}}</a>
                                     {% endif %}
                                         
                                     

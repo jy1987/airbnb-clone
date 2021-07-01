@@ -44,7 +44,7 @@ class Calendar(calendar.Calendar):
 
         for week in weeks:
             for day in week:
-                print(day[0], day[1])
+                # print(day[0], day[1])
                 now = timezone.now()
                 today = now.day
                 now_month = now.month
@@ -54,7 +54,7 @@ class Calendar(calendar.Calendar):
                 new_day = Day(day[0], day[1], past, month=self.month, year=self.year)
                 #  Day(day[0], day[1], past, month=self.month, year=self.year) 각각의 인자를 가지고 있는 상태.
                 days.append(new_day)
-        print(days)
+        # print(days)
         return days
 
     def get_month(self):
