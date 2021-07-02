@@ -5,6 +5,7 @@ from django.views.generic import CreateView, DetailView, View
 from django.shortcuts import render, redirect, reverse
 from rooms import models as room_models
 from . import models
+import reservations
 
 
 # Create your views here.
@@ -50,3 +51,19 @@ class CreateReservationView(DetailView):
         return render(
             self.request, "reservations/detail.html", {"reservation": reservation}
         ) """
+
+
+def edit_reservation(request, pk, verb):
+    try:
+        reservation = models.Reservation.objects.get(pk=pk)
+        if not reservation:
+            raise Http404()
+        if verb == "confirm":
+            reservation.status = models.Reservation.STATUS_CONFIRMED
+        elif verb == "cancel":
+            reservation.status = models.Reservation.STATUS_CANCELED
+            models.Reservation.objects.get(pk=pk).delete()
+        reservation.save()
+        return redirect(reverse("reservations:detail", kwargs={"pk": reservation.pk}))
+    except models.Reservation.DoesNotExist:
+        return redirect(reverse("core:home"))
