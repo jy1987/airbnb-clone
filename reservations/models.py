@@ -4,6 +4,7 @@ from django.db.models.deletion import CASCADE
 from django.utils import timezone
 from core import models as core_models
 from . import managers
+import reservations
 
 # Create your models here.
 
@@ -65,13 +66,16 @@ class Reservation(core_models.TimeStampedModel):
 
     def save(self, *args, **kwargs):
         if self.pk is None:
+            room = self.room
+            print(room.pk)
             start = self.check_in
             end = self.check_out
             difference = end - start
             print(difference)
             existing_booked_day = BetweenDay.objects.filter(
-                day__range=(start, end)
+                day__range=(start, end), reservation__room=room
             ).exists()
+
             print(existing_booked_day)
             if existing_booked_day is False:
                 super().save(*args, **kwargs)
