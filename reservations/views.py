@@ -5,7 +5,7 @@ from django.views.generic import CreateView, DetailView, View
 from django.shortcuts import render, redirect, reverse
 from rooms import models as room_models
 from . import models
-import reservations
+from reviews.forms import CreateReviewForm
 
 
 # Create your views here.
@@ -35,6 +35,11 @@ def create(request, room, year, month, day):
 class CreateReservationView(DetailView):
     model = models.Reservation
     template_name = "reservation_detail.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["form"] = CreateReviewForm
+        return context
 
 
 """ class ReservationDetailView(View):

@@ -91,6 +91,7 @@
                    
                 </div>
                 <div class="border-section">{{review.review}}</div>
+                <a href="{% url "reviews:delete" room_pk=room.pk pk=review.pk %}">delete</a>
             {% endfor %}
                 
         </div>
