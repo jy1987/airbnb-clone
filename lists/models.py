@@ -6,7 +6,7 @@ from core import models as core_models
 class List(core_models.TimeStampedModel):
 
     name = models.CharField(max_length=80)
-    user = models.ForeignKey(
+    user = models.OneToOneField(
         "users.User", related_name="lists", on_delete=models.CASCADE
     )  # 다음엔 ManyToMany 로 해보기
     rooms = models.ManyToManyField("rooms.Room", related_name="lists", blank=True)
