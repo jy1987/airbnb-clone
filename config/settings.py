@@ -134,4 +134,12 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "uploads_file")
 
 MEDIA_URL = "/media/"  # /을 앞에 붙이면 절대path가 됨.
 
+#Auth
+
 LOGIN_URL = "/users/login/"
+
+#locale
+
+LOCALE_PATHS=(os.path.join(BASE_DIR, "locale"),)
+
+

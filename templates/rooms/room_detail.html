@@ -29,6 +29,7 @@
                 <span class="text-gray-400 font-light">{{room.host.first_name}}</span>
             </a>
         </div>
+        <a href="{% url "lists:add" room.pk %}" class=" w-1/2 block my-3 bg-red-400 rounded-md py-2 text-white text-center">Save to Favs</a>
         <div class="border-section">
             <span class="mr-2">{{room.room_type}}</span>
             <span class="mr-2">{{room.beds}} bed{{room.beds|pluralize}}</span>
