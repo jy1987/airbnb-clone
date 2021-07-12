@@ -30,3 +30,9 @@ def delete(request, room_pk):
             return redirect(reverse("rooms:detail", kwargs={"pk": room_pk}))
         except room_models.Room.DoesNotExist:
             return redirect(reverse("core:home"))
+
+
+def fav_list(request):
+    user = request.user
+
+    return render(request, "favs.html", {user: user})

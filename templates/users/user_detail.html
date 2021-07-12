@@ -38,7 +38,7 @@
      {% if user_obj.rooms.count > 0 %}
      <div class="container mx-auto flex flex-col items-center mt-5">
          <h3>{{user_obj.first_name}}'s Room</h3>
-         <div class="flex flex-wrap mt-5">
+         <div class="w-full flex flex-wrap mt-5">
              {% for room in user_obj.rooms.all %} 
                  {% include 'mixins/room_card.html' with room=room %}
          

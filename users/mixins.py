@@ -1,4 +1,4 @@
-from django.shortcuts import redirect
+from django.shortcuts import redirect, reverse
 from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
 from django.contrib import messages
 from django.urls import reverse_lazy
@@ -13,7 +13,7 @@ class LoggedOutOnlyView(UserPassesTestMixin):
 
     def handle_no_permission(self):
         messages.error(self.request, "Can not go there")
-        return redirect("core:home")
+        return redirect(reverse("core:home"))
 
 
 class LoggedInOnlyView(LoginRequiredMixin):

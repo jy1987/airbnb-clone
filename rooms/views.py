@@ -80,6 +80,8 @@ class SearchView(View):
                 if superhost is True:
                     filter_args["host__superhost"] = True
 
+                print(filter_args)
+
                 qs = models.Room.objects.filter(**filter_args)
 
                 for amenity in amenities:
@@ -185,19 +187,42 @@ class EditPhotoView(user_mixins.LoggedInOnlyView, UpdateView):
     )
 
     def get_success_url(self):
+
         room_pk = self.kwargs.get("room_pk")
         return reverse("rooms:edit-photo", kwargs={"pk": room_pk})
 
 
-class AddPhotoView(user_mixins.LoggedInOnlyView, FormView):
-
+class AddPhotoView(user_mixins.LoggedInOnlyView, CreateView):
+    model = models.Photo
     template_name = "rooms/add_photo.html"
-    form_class = forms.CreatePhotoForm
+    fields = (
+        "caption",
+        "file",
+        "room",
+    )
 
-    def form_valid(self, form):
-        pk = self.kwargs.get("pk")  # view는 pk를 알고 있다.
-        form.save(pk)
-        return redirect(reverse("rooms:edit-photo", kwargs={"pk": pk}))
+    def get_success_url(self):
+
+        room_pk = self.kwargs.get("pk")
+        return reverse("rooms:edit-photo", kwargs={"pk": room_pk})
+
+    # def form_valid(self, form):
+
+    #     pk = self.kwargs.get("pk")  # view는 pk를 알고 있다.
+
+    #     form.save(pk)
+    #     return redirect(reverse("rooms:edit-photo", kwargs={"pk": pk}))
+
+
+# class AddPhotoView(user_mixins.LoggedInOnlyView, FormView):
+
+#     template_name = "rooms/add_photo.html"
+#     form_class = forms.CreatePhotoForm
+
+#     def form_valid(self, form):
+#         pk = self.kwargs.get("pk")  # view는 pk를 알고 있다.
+#         form.save(pk)
+#         return redirect(reverse("rooms:edit-photo", kwargs={"pk": pk}))
 
 
 class CreateRoomView(user_mixins.LoggedInOnlyView, CreateView):
@@ -205,7 +230,6 @@ class CreateRoomView(user_mixins.LoggedInOnlyView, CreateView):
     template_name = "rooms/room_create.html"
     fields = (
         "name",
-        "photos",
         "description",
         "country",
         "city",
